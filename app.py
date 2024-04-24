@@ -39,17 +39,17 @@ def create_app() -> FastAPI:
 app = create_app()
 
 
-# async def init_models():
-#     from database.base import Base
-#     from database.session import engine
-#     async with engine.begin() as conn:
-#         # await conn.run_sync(Base.metadata.drop_all)
-#         await conn.run_sync(Base.metadata.create_all)
+async def init_models():
+    from database.base import Base
+    from database.session import engine
+    async with engine.begin() as conn:
+        # await conn.run_sync(Base.metadata.drop_all)
+        await conn.run_sync(Base.metadata.create_all)
 
 
 @app.on_event("startup")
 async def on_startup():
-    # await init_models()
+    await init_models()
     pass
 
 
