@@ -32,7 +32,7 @@ async def create_help_request(
 
 @help_requests_router.get("/")
 async def help_requests_search(
-        limit: PositiveInt = Query(default=10),
+        limit: PositiveInt = Query(default=5),
         offset: PositiveInt = Query(default=0),
         help_requests_controller: HelpRequestController = Depends(ControllersFactory.get_help_requests_controller)
 ) -> HelpRequestList:
@@ -51,7 +51,7 @@ async def help_requests_search(
 @help_requests_router.get("/mine")
 async def help_requests_by_user(
         current_user: User = Depends(get_current_user),
-        limit: PositiveInt = Query(default=10),
+        limit: PositiveInt = Query(default=5),
         offset: PositiveInt = Query(default=0),
         help_requests_controller: HelpRequestController = Depends(ControllersFactory.get_help_requests_controller)
 ) -> HelpRequestList:
