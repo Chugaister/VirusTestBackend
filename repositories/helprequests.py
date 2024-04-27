@@ -13,9 +13,12 @@ class HelpRequestsRepository(BaseRepository):
     async def get_all_date_sorted(
             self,
             session: AsyncSession,
+            user_id: int,
             limit: int,
             offset: int
     ) -> List[HelpRequest]:
         query = self.query()
+        if user_id:
+            query = query.where(HelpRequest.user_id == user_id)
         query = query.order_by(desc(HelpRequest.created_at)).limit(limit).offset(offset)
         return await self.all(session, query)

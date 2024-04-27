@@ -37,6 +37,26 @@ async def help_requests_search(
         help_requests_controller: HelpRequestController = Depends(ControllersFactory.get_help_requests_controller)
 ) -> HelpRequestList:
     items, size, total = await help_requests_controller.search_help_requests(
+        None,
+        limit=limit,
+        offset=offset
+    )
+    return HelpRequestList(
+        items=items,
+        size=size,
+        total=total
+    )
+
+
+@help_requests_router.get("/mine")
+async def help_requests_by_user(
+        current_user: User = Depends(get_current_user),
+        limit: PositiveInt = Query(default=10),
+        offset: PositiveInt = Query(default=0),
+        help_requests_controller: HelpRequestController = Depends(ControllersFactory.get_help_requests_controller)
+) -> HelpRequestList:
+    items, size, total = await help_requests_controller.search_help_requests(
+        user_id=current_user.user_id,
         limit=limit,
         offset=offset
     )

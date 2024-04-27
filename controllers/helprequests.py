@@ -2,6 +2,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from controllers.base import BaseController
 from typing import List
 from typing import Tuple
+from typing import Optional
 
 from repositories.helprequests import HelpRequestsRepository
 from database.models.user import User
@@ -39,11 +40,13 @@ class HelpRequestController(BaseController):
 
     async def search_help_requests(
             self,
+            user_id: Optional[int],
             limit: int,
             offset: int
     ) -> Tuple[List[HelpRequest], int, int]:
         hrs = await self.hr_repo.get_all_date_sorted(
             self.session,
+            user_id,
             limit,
             offset
         )
